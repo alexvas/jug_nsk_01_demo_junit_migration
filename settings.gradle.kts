@@ -7,6 +7,7 @@ include(
         "04_junit4_kotlin_jvmstatic",
         "05_junit4_on_junit5_platform",
         "06_junit4_on_junit5_platform_per_class",
-        "07_junit5_platform_spectrum"
+        "07_junit5_platform_spectrum",
+        "08_shambala"
 )
 
