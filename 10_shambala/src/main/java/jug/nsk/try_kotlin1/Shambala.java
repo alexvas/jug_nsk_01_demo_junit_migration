@@ -13,20 +13,20 @@ public class Shambala {
     return Holder.theOne;
   }
 
-  private boolean avalable = false;
+  private boolean available = false;
 
   public void access() {
-    avalable = true;
+    available = true;
     System.out.println("Shambala is available now");
   }
 
   public void leave() {
-    avalable = false;
+    available = false;
     System.out.println("Shambala has become NOT available");
   }
 
   public boolean isAuthentic() {
-    if (!avalable) {
+    if (!available) {
       throw new IllegalStateException("not available!");
     }
     return true;
