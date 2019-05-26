@@ -7,8 +7,6 @@ tasks.test {
 }
 
 dependencies {
-    implementation(project(":01_library_under_test"))
-
     testImplementation("junit:junit:4.12")
 
     val junitBomVersion = "5.4.2"
