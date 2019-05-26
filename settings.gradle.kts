@@ -9,6 +9,7 @@ include(
         "06_junit4_on_junit5_platform_per_class",
         "07_junit5_platform_spectrum",
         "08_shambala",
-        "09_shambala_junit5_way"
+        "09_shambala_junit5_way",
+        "10_shambala_vs_neverland"
 )
 
