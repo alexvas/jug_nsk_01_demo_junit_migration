@@ -7,7 +7,7 @@ tasks.test {
 }
 
 dependencies {
-    implementation(project(":08_shambala"))
+    implementation(project(":10_shambala"))
     implementation(kotlin("stdlib-jdk8"))
 
     val junitBomVersion = "5.4.2"
