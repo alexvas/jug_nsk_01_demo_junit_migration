@@ -12,6 +12,7 @@ include(
         "09_lost_test",
         "10_shambala",
         "11_shambala_junit5_way",
-        "12_shambala_vs_neverland"
+        "12_shambala_vs_neverland",
+        "13_nested_the_right_way"
 )
 

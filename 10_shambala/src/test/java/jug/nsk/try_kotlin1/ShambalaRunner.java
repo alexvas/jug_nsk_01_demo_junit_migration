@@ -20,8 +20,7 @@ public class ShambalaRunner extends BlockJUnit4ClassRunner {
     return new Statement() {
       @Override
       public void evaluate() throws Throwable {
-        try (ShambalaAdapter adapter = new ShambalaAdapter(Shambala.getInstance())) {
-          adapter.open();
+        try (ShambalaAdapter ignored = new ShambalaAdapter(Shambala.getInstance())) {
           statement.evaluate();
         }
       }

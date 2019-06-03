@@ -5,9 +5,6 @@ class ShambalaAdapter implements AutoCloseable {
 
   ShambalaAdapter(Shambala shambala) {
     this.shambala = shambala;
-  }
-
-  void open() {
     shambala.access();
   }
 

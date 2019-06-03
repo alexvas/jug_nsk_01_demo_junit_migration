@@ -16,11 +16,13 @@ public class Shambala {
   private boolean available = false;
 
   public void access() {
+    if (available) throw new IllegalStateException("already available");
     available = true;
     System.out.println("Shambala is available now");
   }
 
   public void leave() {
+    if (!available) throw new IllegalStateException("already NOT available");
     available = false;
     System.out.println("Shambala has become NOT available");
   }
