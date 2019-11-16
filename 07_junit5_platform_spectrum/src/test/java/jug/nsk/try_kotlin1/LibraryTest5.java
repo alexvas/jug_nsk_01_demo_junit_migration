@@ -23,7 +23,7 @@ class LibraryTest5 {
     @Test
     void testSomeLibraryMethod() {
         Library classUnderTest = new Library();
-        assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod());
+        assertTrue("just 'true'", classUnderTest.someLibraryMethod());
         assertEquals("a initialized to 2 in setUp", 2, a);
     }
 

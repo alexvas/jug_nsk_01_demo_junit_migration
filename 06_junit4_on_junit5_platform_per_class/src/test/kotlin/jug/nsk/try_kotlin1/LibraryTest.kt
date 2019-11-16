@@ -9,7 +9,7 @@ class LibraryTest {
 //    @Test
     fun testSomeLibraryMethod() {
         val classUnderTest = Library()
-        assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod())
+        assertTrue("just 'true'", classUnderTest.someLibraryMethod())
     }
 
     @BeforeClass

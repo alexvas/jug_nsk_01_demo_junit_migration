@@ -23,17 +23,6 @@ class ClientTestInJava {
 //    assertEquals(result, CoroutineSingletons.COROUTINE_SUSPENDED);
   }
 
-  @Test
-  void Алекс_вызывает_Юстаса2() throws InterruptedException {
-    Client client = new Client();
-
-    String result = runBlocking(
-        EmptyCoroutineContext.INSTANCE,
-        (coroutineScope, continuation) -> client.call(continuation)
-    );
-    assertEquals(result, "done");
-  }
-
   @NotNull
   private Continuation<String> mockContinuation() {
     return new Continuation<String>() {
@@ -45,10 +34,19 @@ class ClientTestInJava {
 
       @Override
       public void resumeWith(@NotNull Object o) {
-
       }
     };
   }
 
+  @Test
+  void Алекс_вызывает_Юстаса2() throws InterruptedException {
+    Client client = new Client();
+
+    String result = runBlocking(
+        EmptyCoroutineContext.INSTANCE,
+        (coroutineScope, continuation) -> client.call(continuation)
+    );
+    assertEquals(result, "done");
+  }
 
 }
