@@ -14,6 +14,7 @@ include(
         "11_shambala_junit5_way",
         "12_shambala_vs_neverland",
         "13_nested_the_right_way",
-        "14_java_is_not_enough"
+        "14_java_is_not_enough",
+        "15_little_tragedy"
 )
 
