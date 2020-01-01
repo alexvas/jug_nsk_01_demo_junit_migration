@@ -21,15 +21,14 @@ class Act3Test {
     fun `проверяем, что всё сошлось`() {
 
         val toAdd = 100500
-//        val toAdd = 10
         val farm = CoinFarm()
 
-        val vault: Vault = EnhancedVault(farm, AsyncChest, ExecutorDeposit, *initialAsyncChests())
+        val vault: Vault = EnhancedVault(farm, AsyncChest, ThreadDeposit, *initialAsyncChests())
         val startCount = vault.count()
 
         vault.saveHandfulOfGold(toAdd)
 
-//        assertEquals(toAdd, farm.count(), "как заказывали, так и сгенерировали")
+        assertEquals(toAdd, farm.count(), "как заказывали, так и сгенерировали")
         assertEquals(startCount + toAdd, vault.count(), "Ключи, ключи мои!...")
     }
 

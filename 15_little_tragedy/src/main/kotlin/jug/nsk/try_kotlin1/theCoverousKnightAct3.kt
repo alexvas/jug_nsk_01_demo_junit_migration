@@ -1,14 +1,11 @@
 package jug.nsk.try_kotlin1
 
 
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Supplier
 import kotlin.math.min
 
-private val PROC_NUM = Runtime.getRuntime().availableProcessors()
-private val pool = Executors.newFixedThreadPool(PROC_NUM)
+internal val PROC_NUM = Runtime.getRuntime().availableProcessors()
 
 class AsyncChest(count: Int = 0, private val size: Int = 100) : Chest {
 
@@ -29,7 +26,7 @@ class AsyncChest(count: Int = 0, private val size: Int = 100) : Chest {
     }
 }
 
-class ExecutorDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
+class ThreadDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
 
     private val deposits: List<Deposit>
 
@@ -41,27 +38,22 @@ class ExecutorDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit 
     }
 
     override fun saveHandfulOfGold() {
-        val futures = deposits.map {
-            pool.submit { it.saveHandfulOfGold() }
+        val threads = deposits.map {
+            Thread { it.saveHandfulOfGold() }
         }
 
-        futures.map {
-            try {
-                it.get()
-            } catch (e: ExecutionException) {
-                throw e.cause!!
-            }
-        }
+        threads.map { it.start() }
+        threads.map { it.join() }
     }
 
     override fun left() = deposits.sumBy { it.left() }
 
     companion object Companion : Deposit.Factory {
-        override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = ExecutorDeposit(farm, chest, left)
+        override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = ThreadDeposit(farm, chest, left)
     }
 }
 
-private fun distributeInEqualShares(amount: Int): MutableList<Int> {
+internal fun distributeInEqualShares(amount: Int): MutableList<Int> {
     val base = amount / PROC_NUM
     val mod = amount % PROC_NUM
     val size = when (base) {
