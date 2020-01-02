@@ -32,7 +32,7 @@ class ThreadDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
 
     init {
         require(amount > 0) { "Negative amount: $amount" }
-        deposits = distributeInEqualShares(amount).map {
+        deposits = distributeInEqualShares(amount, PROC_NUM).map {
             SimpleDeposit(farm, chest, it)
         }
     }
@@ -53,16 +53,12 @@ class ThreadDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
     }
 }
 
-internal fun distributeInEqualShares(amount: Int): MutableList<Int> {
-    val base = amount / PROC_NUM
-    val mod = amount % PROC_NUM
+internal fun distributeInEqualShares(amount: Int, procNum: Int): List<Int> {
+    val base = amount / procNum
+    val mod = amount % procNum
     val size = when (base) {
         0 -> mod
-        else -> PROC_NUM
+        else -> procNum
     }
-    val amounts = MutableList(size) { base }
-    repeat(mod) {
-        amounts[it] = amounts[it] + 1
-    }
-    return amounts
+    return List(size) { if (it < mod) base + 1 else base }
 }

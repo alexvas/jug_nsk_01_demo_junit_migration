@@ -13,7 +13,7 @@ class ExecutorDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit 
 
     init {
         require(amount > 0) { "Negative amount: $amount" }
-        deposits = distributeInEqualShares(amount).map {
+        deposits = distributeInEqualShares(amount, PROC_NUM).map {
             SimpleDeposit(farm, chest, it)
         }
     }
