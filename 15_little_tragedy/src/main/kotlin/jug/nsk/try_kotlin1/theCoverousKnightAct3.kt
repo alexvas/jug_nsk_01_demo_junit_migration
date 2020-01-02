@@ -7,11 +7,14 @@ import kotlin.math.min
 
 internal val PROC_NUM = Runtime.getRuntime().availableProcessors()
 
-class AsyncChest(count: Int = 0, private val size: Int = 100) : Chest {
+class AsyncChest(content: IntArray) : Chest {
+    private val content: IntArray = IntArray(CHEST_SIZE)
+    private val count = AtomicInteger(content.size)
 
-    private val count = AtomicInteger(count)
-
-    private val content: IntArray = IntArray(size)
+    init {
+        require(content.size <= CHEST_SIZE)
+        System.arraycopy(content, 0, this.content, 0, content.size)
+    }
 
     override fun put(coin: Int) = try {
         content[count.getAndIncrement()] = coin
@@ -19,10 +22,10 @@ class AsyncChest(count: Int = 0, private val size: Int = 100) : Chest {
         throw DropOut(coin)
     }
 
-    override fun count() = min(count.get(), size)
+    override fun count() = min(count.get(), CHEST_SIZE)
 
     companion object Companion : Supplier<Chest> {
-        override fun get() = AsyncChest()
+        override fun get() = AsyncChest(IntArray(0))
     }
 }
 

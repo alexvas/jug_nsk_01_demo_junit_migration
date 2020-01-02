@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test
 
 
 fun initialAsyncChests(): Array<Chest> = arrayOf(
-        AsyncChest(100),
-        AsyncChest(100),
-        AsyncChest(100),
-        AsyncChest(100),
-        AsyncChest(100),
-        AsyncChest(87)
+        AsyncChest(gold()),
+        AsyncChest(gold()),
+        AsyncChest(gold()),
+        AsyncChest(gold()),
+        AsyncChest(gold()),
+        AsyncChest(gold(87))
 )
 
 

@@ -1,8 +1,11 @@
 package jug.nsk.try_kotlin1
 
+import java.lang.Integer.min
 import java.util.function.Supplier
 
 class DropOut(val coin: Int) : Exception("coin drop-out")
+
+internal const val CHEST_SIZE: Int = 100
 
 interface Chest {
     @Throws(DropOut::class)
@@ -17,20 +20,25 @@ interface Vault {
     fun count(): Int
 }
 
-class SimpleChest(private var count: Int = 0, size: Int = 100): Chest {
-    private val content: IntArray = IntArray(size)
+class SimpleChest(content: IntArray): Chest {
+    private val content: IntArray = IntArray(CHEST_SIZE)
+    private var count: Int = content.size
+
+    init {
+        require(content.size <= CHEST_SIZE)
+        System.arraycopy(content, 0, this.content, 0, content.size)
+    }
 
     override fun put(coin: Int) = try {
         content[count++] = coin
     } catch (e: IndexOutOfBoundsException) {
-        count-- // на самом деле положить монету не удалось
         throw DropOut(coin)
     }
 
-    override fun count() = count
+    override fun count() = min(count, CHEST_SIZE)
 
     companion object Companion : Supplier<Chest> {
-        override fun get() = SimpleChest()
+        override fun get() = SimpleChest(IntArray(0))
     }
 }
 

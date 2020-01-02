@@ -19,13 +19,15 @@ class CoinFarm: Supplier<Int> {
     fun count() = count.get()
 }
 
+internal fun gold(size: Int = CHEST_SIZE) = IntArray(size) { Random.nextInt() }
+
 fun initialSimpleChests(): Array<Chest> = arrayOf(
-        SimpleChest(100),
-        SimpleChest(100),
-        SimpleChest(100),
-        SimpleChest(100),
-        SimpleChest(100),
-        SimpleChest(87)
+        SimpleChest(gold()),
+        SimpleChest(gold()),
+        SimpleChest(gold()),
+        SimpleChest(gold()),
+        SimpleChest(gold()),
+        SimpleChest(gold(87))
 )
 
 class Act1Test {
