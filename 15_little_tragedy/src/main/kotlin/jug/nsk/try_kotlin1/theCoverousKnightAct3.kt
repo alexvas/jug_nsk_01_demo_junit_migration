@@ -1,6 +1,7 @@
 package jug.nsk.try_kotlin1
 
 
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Supplier
 import kotlin.math.min
@@ -54,6 +55,17 @@ class ThreadDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
     companion object Companion : Deposit.Factory {
         override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = ThreadDeposit(farm, chest, left)
     }
+}
+
+class AsyncVault(
+        farm: Supplier<Int>,
+        chestFactory: Supplier<Chest>,
+        depositFactory: Deposit.Factory,
+        vararg initialChests: Chest
+) : EnhancedVault(farm, chestFactory, depositFactory, *initialChests) {
+
+    override val chests: MutableList<Chest>
+        get() = Collections.synchronizedList(super.chests)
 }
 
 internal fun distributeInEqualShares(amount: Int, procNum: Int): List<Int> {

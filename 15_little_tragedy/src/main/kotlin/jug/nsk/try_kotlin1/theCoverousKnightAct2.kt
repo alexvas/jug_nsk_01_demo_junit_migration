@@ -30,13 +30,13 @@ class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, p
     }
 }
 
-class EnhancedVault(
+open class EnhancedVault(
         private val farm: Supplier<Int>,
         private val chestFactory:Supplier<Chest>,
         private val depositFactory: Deposit.Factory,
         vararg initialChests: Chest
 ): Vault {
-    private val chests = mutableListOf(*initialChests)
+    internal open val chests = mutableListOf(*initialChests)
 
     override fun saveHandfulOfGold(amount: Int) {
         var left = amount
