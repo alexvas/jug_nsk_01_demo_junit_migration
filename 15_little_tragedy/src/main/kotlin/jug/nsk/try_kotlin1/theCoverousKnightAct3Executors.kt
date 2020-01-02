@@ -27,6 +27,7 @@ class ExecutorDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit 
             try {
                 it.get()
             } catch (e: ExecutionException) {
+                // todo: суммировать вылетевшие монеты
                 throw e.cause!!
             }
         }
