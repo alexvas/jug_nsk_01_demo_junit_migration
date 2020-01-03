@@ -86,7 +86,7 @@ class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : De
     }
 }
 
-class AsyncVault(
+open class AsyncVault(
         farm: Supplier<Int>,
         chestFactory: Supplier<Chest>,
         depositFactory: Deposit.Factory,

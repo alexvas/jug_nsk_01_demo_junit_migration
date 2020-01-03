@@ -50,12 +50,16 @@ open class EnhancedVault(
                 deposit.saveHandfulOfGold()
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
-                e.coins.forEach { newChest.put(it) }
+                saveDropOutInTheChest(e, newChest)
                 chests += newChest
             } finally {
                 left -= deposit.farmed()
             }
         }
+    }
+
+    internal open fun saveDropOutInTheChest(e: DropOut, chest: Chest) {
+        e.coins.forEach { chest.put(it) }
     }
 
     override fun count() = chests.sumBy { it.count() }
