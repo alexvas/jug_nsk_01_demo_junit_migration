@@ -6,24 +6,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
-fun initialAsyncChests(): Array<Chest> = arrayOf(
-        AsyncChest(gold()),
-        AsyncChest(gold()),
-        AsyncChest(gold()),
-        AsyncChest(gold()),
-        AsyncChest(gold()),
-        AsyncChest(gold(87))
-)
-
-
-class Act3Test {
+class Act3ExecutorsTest {
     @Test
     fun `проверяем, что всё сошлось`() {
 
         val toAdd = 100500
         val farm = CoinFarm()
 
-        val vault: Vault = AsyncVault(farm, AsyncChest, MultithreadingDeposit, *initialAsyncChests())
+        val vault: Vault = AsyncVault(farm, AsyncChest, ExecutorDeposit, *initialAsyncChests())
         val startCount = vault.count()
 
         vault.saveHandfulOfGold(toAdd)

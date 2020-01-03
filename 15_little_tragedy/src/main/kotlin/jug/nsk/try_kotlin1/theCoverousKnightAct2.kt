@@ -5,25 +5,29 @@ import java.util.function.Supplier
 interface Deposit {
     fun saveHandfulOfGold()
 
-    fun left(): Int
+    fun farmed(): Int
 
     interface Factory {
         fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit
     }
 }
 
-class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private var left: Int): Deposit {
+class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val amount: Int): Deposit {
     init {
-        require(left > 0) { "Negative amount: $left" }
+        require(amount > 0) { "Negative amount: $amount" }
     }
 
+    private var farmed = 0
+
+    @Throws(DropOut::class)
     override fun saveHandfulOfGold() {
-        while (left --> 0) saveACoin()
+        while (farmed < amount) {
+            ++farmed
+            chest.put(farm.get())
+        }
     }
 
-    private fun saveACoin() = chest.put(farm.get())
-
-    override fun left() = left
+    override fun farmed() = farmed
 
     companion object Companion : Deposit.Factory {
         override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = SimpleDeposit(farm, chest, left)
@@ -46,10 +50,10 @@ open class EnhancedVault(
                 deposit.saveHandfulOfGold()
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
-                newChest.put(e.coin)
+                e.coins.forEach { newChest.put(it) }
                 chests += newChest
             } finally {
-                left = deposit.left()
+                left -= deposit.farmed()
             }
         }
     }

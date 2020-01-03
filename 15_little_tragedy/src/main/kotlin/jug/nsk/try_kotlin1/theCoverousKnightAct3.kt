@@ -20,24 +20,53 @@ class AsyncChest(content: IntArray) : Chest {
     override fun put(coin: Int) = try {
         content[count.getAndIncrement()] = coin
     } catch (e: IndexOutOfBoundsException) {
-        throw DropOut(coin)
+        throw DropOut(listOf(coin))
     }
 
     override fun count() = min(count.get(), CHEST_SIZE)
 
+    override fun toString(): String {
+        return "AsyncChest(count=${count.get()})"
+    }
+
     companion object Companion : Supplier<Chest> {
         override fun get() = AsyncChest(IntArray(0))
     }
+
+
 }
 
-class ThreadDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
+class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val amount: Int): Deposit {
+    init {
+        require(amount > 0) { "Negative amount: $amount" }
+    }
+
+    private val farmed = AtomicInteger(0)
+
+    @Throws(DropOut::class)
+    override fun saveHandfulOfGold() {
+        while (farmed.get() < amount) {
+            farmed.incrementAndGet()
+            chest.put(farm.get())
+        }
+    }
+
+    override fun farmed() = farmed.get()
+
+    override fun toString(): String {
+        return "A-Deposit(amount=$amount, farmed=${farmed.get()})"
+    }
+
+}
+
+class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
 
     private val deposits: List<Deposit>
 
     init {
         require(amount > 0) { "Negative amount: $amount" }
         deposits = distributeInEqualShares(amount, PROC_NUM).map {
-            SimpleDeposit(farm, chest, it)
+            AsyncDeposit(farm, chest, it)
         }
     }
 
@@ -50,10 +79,10 @@ class ThreadDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
         threads.map { it.join() }
     }
 
-    override fun left() = deposits.sumBy { it.left() }
+    override fun farmed() = deposits.sumBy { it.farmed() }
 
     companion object Companion : Deposit.Factory {
-        override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = ThreadDeposit(farm, chest, left)
+        override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = MultithreadingDeposit(farm, chest, left)
     }
 }
 

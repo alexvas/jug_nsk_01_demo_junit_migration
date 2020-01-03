@@ -3,7 +3,7 @@ package jug.nsk.try_kotlin1
 import java.lang.Integer.min
 import java.util.function.Supplier
 
-class DropOut(val coin: Int) : Exception("coin drop-out")
+class DropOut(val coins: List<Int>) : Exception("coins drop-out")
 
 internal const val CHEST_SIZE: Int = 100
 
@@ -32,7 +32,7 @@ class SimpleChest(content: IntArray): Chest {
     override fun put(coin: Int) = try {
         content[count++] = coin
     } catch (e: IndexOutOfBoundsException) {
-        throw DropOut(coin)
+        throw DropOut(listOf(coin))
     }
 
     override fun count() = min(count, CHEST_SIZE)
@@ -51,7 +51,7 @@ class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supp
                 saveACoin()
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
-                newChest.put(e.coin)
+                e.coins.forEach { newChest.put(it) }
                 chests += newChest
             }
         }
