@@ -59,7 +59,18 @@ open class EnhancedVault(
     }
 
     internal open fun saveDropOutInTheChest(e: DropOut, chest: Chest) {
-        e.coins.forEach { chest.put(it) }
+        putDropOutCoins(e, chest)
+        e.suppressed.forEach {
+            when (it) {
+                is DropOut -> putDropOutCoins(it, chest)
+                else -> throw it
+            }
+        }
+
+    }
+
+    private fun putDropOutCoins(e: DropOut, chest: Chest) {
+        e.coins.forEach { coin -> chest.put(coin) }
     }
 
     override fun count() = chests.sumBy { it.count() }

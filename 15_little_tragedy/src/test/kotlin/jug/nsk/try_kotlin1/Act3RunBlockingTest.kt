@@ -13,7 +13,7 @@ class Act3RunBlockingTest {
         val toAdd = 100500
         val farm = CoinFarm()
 
-        val vault: Vault = CoroutineVault(farm, AsyncChest, RunBlockingDeposit, *initialAsyncChests())
+        val vault: Vault = AsyncVault(farm, AsyncChest, RunBlockingDeposit, *initialAsyncChests())
         val startCount = vault.count()
 
         vault.saveHandfulOfGold(toAdd)

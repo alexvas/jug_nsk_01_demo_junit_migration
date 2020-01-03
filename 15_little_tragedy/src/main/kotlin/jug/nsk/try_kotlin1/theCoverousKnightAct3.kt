@@ -75,8 +75,8 @@ class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : De
             Thread { it.saveHandfulOfGold() }
         }
 
-        threads.map { it.start() }
-        threads.map { it.join() }
+        threads.forEach { it.start() }
+        threads.forEach { it.join() }
     }
 
     override fun farmed() = deposits.sumBy { it.farmed() }

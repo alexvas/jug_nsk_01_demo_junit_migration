@@ -24,18 +24,22 @@ class ExecutorDeposit(farm: Supplier<Int>, private val chest: Chest, private val
             pool.submit { it.saveHandfulOfGold() }
         }
 
-        val lost = mutableListOf<Int>()
-        futures.map {
+        val thrown = mutableListOf<DropOut>()
+        futures.forEach {
             try {
                 it.get()
             } catch (e: ExecutionException) {
-                when (val c = e.cause!!) {
-                    is DropOut -> lost.addAll(c.coins)
-                    else -> throw c
+                when (val cause = e.cause!!) {
+                    is DropOut -> thrown.add(cause)
+                    else -> throw cause
                 }
             }
         }
-        if (lost.isNotEmpty()) throw DropOut(lost)
+        if (thrown.isEmpty()) return
+
+        val root = thrown.removeAt(0)
+        thrown.forEach { root.addSuppressed(it) }
+        throw root
     }
 
     override fun farmed() = deposits.sumBy { it.farmed() }
