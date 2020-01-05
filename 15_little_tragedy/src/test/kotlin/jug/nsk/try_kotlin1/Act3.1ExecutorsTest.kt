@@ -1,4 +1,4 @@
-@file:Suppress("NonAsciiCharacters")
+@file:Suppress("NonAsciiCharacters", "ClassName")
 
 package jug.nsk.try_kotlin1
 
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 
-class Act3ExecutorsTest {
+class Act3_1ExecutorsTest {
     @Test
     fun `проверяем, что всё сошлось`() {
 
