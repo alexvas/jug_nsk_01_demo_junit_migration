@@ -3,8 +3,8 @@ package jug.nsk.try_kotlin1
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.function.Supplier
 
 class StructuredConcurrencyDeposit(farm: Supplier<Int>, private val chest: Chest, private val amount: Int) {
@@ -21,7 +21,7 @@ class StructuredConcurrencyDeposit(farm: Supplier<Int>, private val chest: Chest
     @Throws(DropOut::class)
     fun saveHandfulOfGold(cs: CoroutineScope) {
         deposits.forEach {
-            cs.launch(Dispatchers.Default) { it.saveHandfulOfGold() }
+            cs.launch { it.saveHandfulOfGold() }
         }
     }
 
@@ -41,7 +41,7 @@ open class StructuredConcurrencyVault(
         while (left > 0) {
             val deposit = StructuredConcurrencyDeposit(farm, chests.last(), left)
             try {
-                coroutineScope {
+                withContext(Dispatchers.Default) {
                     deposit.saveHandfulOfGold(this)
                 }
             } catch (e: DropOut) {
