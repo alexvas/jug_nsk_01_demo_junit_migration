@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Supplier
 import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 
 fun initialAsyncChests(): List<Chest> = listOf(
@@ -39,7 +40,10 @@ class Act3Test {
         val vault: Vault = EnhancedVault(farm, AsyncChest, MultithreadingDeposit, initialAsyncChests())
         val startCount = vault.count()
 
-        vault.saveHandfulOfGold(toAdd)
+        val elapsed = measureTimeMillis {
+            vault.saveHandfulOfGold(toAdd)
+        }
+        println("saved $toAdd coins in $elapsed milliseconds")
 
         assertEquals(toAdd, farm.count(), "как заказывали, так и сгенерировали")
         assertEquals(startCount + toAdd, vault.count(), "Ключи, ключи мои!...")

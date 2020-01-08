@@ -5,6 +5,7 @@ package jug.nsk.try_kotlin1
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.system.measureTimeMillis
 
 
 class Act3_3StructuredConcurrencyTest {
@@ -18,7 +19,10 @@ class Act3_3StructuredConcurrencyTest {
         val startCount = vault.count()
 
         runBlocking {
-            vault.saveHandfulOfGold(toAdd)
+            val elapsed = measureTimeMillis {
+                vault.saveHandfulOfGold(toAdd)
+            }
+            println("saved $toAdd coins in $elapsed milliseconds")
         }
 
         assertEquals(toAdd, farm.count(), "как заказывали, так и сгенерировали")

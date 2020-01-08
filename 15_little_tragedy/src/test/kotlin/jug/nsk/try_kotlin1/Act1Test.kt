@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.function.Supplier
 import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 class SimpleCoinFarm: Supplier<Int> {
     private var counter = 0
@@ -39,7 +40,10 @@ class Act1Test {
         val vault: Vault = SimpleVault(farm, SimpleChest, initialSimpleChests())
         val startCount = vault.count()
 
-        vault.saveHandfulOfGold(toAdd)
+        val elapsed = measureTimeMillis {
+            vault.saveHandfulOfGold(toAdd)
+        }
+        println("saved $toAdd coins in $elapsed milliseconds")
 
         assertEquals(toAdd, farm.count(), "как заказывали, так и сгенерировали")
         assertEquals(startCount + toAdd, vault.count(), "Ключи, ключи мои!...")
