@@ -9,14 +9,14 @@ import java.util.function.Supplier
 import kotlin.random.Random
 
 class CoinFarm: Supplier<Int> {
-    private val count = AtomicInteger(0)
+    private val counter = AtomicInteger(0)
 
     override fun get(): Int {
-        count.incrementAndGet()
+        counter.incrementAndGet()
         return Random.nextInt()
     }
 
-    fun count() = count.get()
+    fun count() = counter.get()
 }
 
 internal fun gold(size: Int = CHEST_SIZE) = IntArray(size) { Random.nextInt() }

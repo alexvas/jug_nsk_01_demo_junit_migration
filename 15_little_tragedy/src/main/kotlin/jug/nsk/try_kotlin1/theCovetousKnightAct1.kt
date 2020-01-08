@@ -22,7 +22,7 @@ interface Vault {
 
 class SimpleChest(content: IntArray): Chest {
     private val content: IntArray = IntArray(CHEST_SIZE)
-    private var count: Int = content.size
+    private var counter: Int = content.size
 
     init {
         require(content.size <= CHEST_SIZE)
@@ -30,12 +30,12 @@ class SimpleChest(content: IntArray): Chest {
     }
 
     override fun put(coin: Int) = try {
-        content[count++] = coin
+        content[counter++] = coin
     } catch (e: IndexOutOfBoundsException) {
         throw DropOut(listOf(coin))
     }
 
-    override fun count() = min(count, CHEST_SIZE)
+    override fun count() = min(counter, CHEST_SIZE)
 
     companion object Companion : Supplier<Chest> {
         override fun get() = SimpleChest(IntArray(0))

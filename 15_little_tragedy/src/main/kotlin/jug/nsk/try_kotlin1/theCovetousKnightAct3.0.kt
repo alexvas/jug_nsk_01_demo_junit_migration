@@ -10,7 +10,7 @@ internal val PROC_NUM = Runtime.getRuntime().availableProcessors()
 
 class AsyncChest(content: IntArray) : Chest {
     private val content: IntArray = IntArray(CHEST_SIZE)
-    private val count = AtomicInteger(content.size)
+    private val counter = AtomicInteger(content.size)
 
     init {
         require(content.size <= CHEST_SIZE)
@@ -18,15 +18,15 @@ class AsyncChest(content: IntArray) : Chest {
     }
 
     override fun put(coin: Int) = try {
-        content[count.getAndIncrement()] = coin
+        content[counter.getAndIncrement()] = coin
     } catch (e: IndexOutOfBoundsException) {
         throw DropOut(listOf(coin))
     }
 
-    override fun count() = min(count.get(), CHEST_SIZE)
+    override fun count() = min(counter.get(), CHEST_SIZE)
 
     override fun toString(): String {
-        return "AsyncChest(count=${count.get()})"
+        return "AsyncChest(count=${counter.get()})"
     }
 
     companion object Companion : Supplier<Chest> {
