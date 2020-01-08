@@ -12,18 +12,19 @@ interface Deposit {
     }
 }
 
-class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val amount: Int): Deposit {
+class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val plannedAmount: Int): Deposit {
     init {
-        require(amount > 0) { "amount must be positive: $amount" }
+        require(plannedAmount > 0) { "amount must be positive: $plannedAmount" }
     }
 
     private var farmed = 0
 
     @Throws(DropOut::class)
     override fun saveHandfulOfGold() {
-        while (farmed < amount) {
+        while (farmed < plannedAmount) {
+            val coin = farm.get()
             ++farmed
-            chest.put(farm.get())
+            chest.put(coin)
         }
     }
 

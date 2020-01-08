@@ -48,7 +48,8 @@ class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supp
     override fun saveHandfulOfGold(amount: Int) {
         repeat(amount) {
             try {
-                saveACoin()
+                val coin = farm.get()
+                chests.last().put(coin)
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
                 e.coins.forEach { newChest.put(it) }
@@ -58,7 +59,5 @@ class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supp
     }
 
     override fun count() = chests.sumBy { it.count() }
-
-    private fun saveACoin() = chests.last().put(farm.get())
 
 }

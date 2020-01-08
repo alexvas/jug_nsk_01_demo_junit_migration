@@ -46,8 +46,9 @@ class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, pr
     @Throws(DropOut::class)
     override fun saveHandfulOfGold() {
         while (farmed.get() < amount) {
+            val coin = farm.get()
             farmed.incrementAndGet()
-            chest.put(farm.get())
+            chest.put(coin)
         }
     }
 
@@ -59,13 +60,13 @@ class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, pr
 
 }
 
-class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : Deposit {
+class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, plannedAmount: Int) : Deposit {
 
     private val deposits: List<Deposit>
 
     init {
-        require(amount > 0) { "amount must be positive: $amount" }
-        deposits = distributeInEqualShares(amount, PROC_NUM).map {
+        require(plannedAmount > 0) { "amount must be positive: $plannedAmount" }
+        deposits = distributeInEqualShares(plannedAmount, PROC_NUM).map {
             AsyncDeposit(farm, chest, it)
         }
     }

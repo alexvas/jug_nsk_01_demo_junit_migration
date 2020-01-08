@@ -7,13 +7,13 @@ import java.util.function.Supplier
 
 private val pool = Executors.newFixedThreadPool(PROC_NUM)
 
-class ExecutorDeposit(farm: Supplier<Int>, private val chest: Chest, private val amount: Int) : Deposit {
+class ExecutorDeposit(farm: Supplier<Int>, private val chest: Chest, private val plannedAmount: Int) : Deposit {
 
     private val deposits: List<Deposit>
 
     init {
-        require(amount > 0) { "amount must be positive: $amount" }
-        deposits = distributeInEqualShares(amount, PROC_NUM).map {
+        require(plannedAmount > 0) { "amount must be positive: $plannedAmount" }
+        deposits = distributeInEqualShares(plannedAmount, PROC_NUM).map {
             AsyncDeposit(farm, chest, it)
         }
     }

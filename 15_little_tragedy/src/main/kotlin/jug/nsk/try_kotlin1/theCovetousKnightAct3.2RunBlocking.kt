@@ -6,13 +6,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.function.Supplier
 
-class RunBlockingDeposit(farm: Supplier<Int>, private val chest: Chest, private val amount: Int) : Deposit {
+class RunBlockingDeposit(farm: Supplier<Int>, private val chest: Chest, private val plannedAmount: Int) : Deposit {
 
     private val deposits: List<Deposit>
 
     init {
-        require(amount > 0) { "amount must be positive: $amount" }
-        deposits = distributeInEqualShares(amount, PROC_NUM).map {
+        require(plannedAmount > 0) { "amount must be positive: $plannedAmount" }
+        deposits = distributeInEqualShares(plannedAmount, PROC_NUM).map {
             AsyncDeposit(farm, chest, it)
         }
     }
