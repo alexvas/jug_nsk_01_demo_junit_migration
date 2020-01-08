@@ -48,3 +48,23 @@ class ExecutorDeposit(farm: Supplier<Int>, private val chest: Chest, private val
         override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = ExecutorDeposit(farm, chest, left)
     }
 }
+
+fun Chest.deepSave(e: DropOut) {
+        save(e)
+        e.suppressed.forEach {
+            when (it) {
+                is DropOut -> save(it)
+                else -> throw it
+            }
+        }
+}
+
+class DeepVault(
+        farm: Supplier<Int>,
+        chestFactory: Supplier<Chest>,
+        depositFactory: Deposit.Factory,
+        initialChests: List<Chest>
+) : BaseVault(farm, chestFactory, depositFactory, initialChests) {
+
+    override fun saveDropOut(chest: Chest, e: DropOut) = chest.deepSave(e)
+}

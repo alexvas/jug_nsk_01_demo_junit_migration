@@ -14,7 +14,7 @@ class Act3_3StructuredConcurrencyTest {
         val toAdd = 100500
         val farm = CoinFarm()
 
-        val vault = StructuredConcurrencyVault(farm, AsyncChest, *initialAsyncChests())
+        val vault = StructuredConcurrencyVault(farm, AsyncChest, initialAsyncChests())
         val startCount = vault.count()
 
         runBlocking {

@@ -10,9 +10,9 @@ class Act2Test {
     fun `проверяем, что всё сошлось`() {
 
         val toAdd = 100500
-        val farm = CoinFarm()
+        val farm = SimpleCoinFarm()
 
-        val vault: Vault = EnhancedVault(farm, SimpleChest, SimpleDeposit, *initialSimpleChests())
+        val vault: Vault = EnhancedVault(farm, SimpleChest, SimpleDeposit, initialSimpleChests())
         val startCount = vault.count()
 
         vault.saveHandfulOfGold(toAdd)

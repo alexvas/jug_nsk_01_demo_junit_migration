@@ -1,51 +1,33 @@
 package jug.nsk.try_kotlin1
 
 
-import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Supplier
-import kotlin.math.min
 
 internal val PROC_NUM = Runtime.getRuntime().availableProcessors()
 
-class AsyncChest(content: IntArray) : Chest {
-    private val content: IntArray = IntArray(CHEST_SIZE)
-    private val counter = AtomicInteger(content.size)
+class AsyncChest(gold: IntArray) : BaseChest(gold) {
+    private val counter = AtomicInteger(gold.size)
 
-    init {
-        require(content.size <= CHEST_SIZE)
-        System.arraycopy(content, 0, this.content, 0, content.size)
-    }
+    override fun getTryCount() = counter.get()
 
-    override fun put(coin: Int) = try {
-        content[counter.getAndIncrement()] = coin
-    } catch (e: IndexOutOfBoundsException) {
-        throw DropOut(listOf(coin))
-    }
-
-    override fun count() = min(counter.get(), CHEST_SIZE)
-
-    override fun toString(): String {
-        return "AsyncChest(count=${counter.get()})"
-    }
+    override fun nextTryCount() = counter.getAndIncrement()
 
     companion object Companion : Supplier<Chest> {
         override fun get() = AsyncChest(IntArray(0))
     }
-
-
 }
 
-class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val amount: Int): Deposit {
+class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val plannedAmount: Int) : Deposit {
     init {
-        require(amount > 0) { "amount must be positive: $amount" }
+        require(plannedAmount > 0) { "amount must be positive: $plannedAmount" }
     }
 
     private val farmed = AtomicInteger(0)
 
     @Throws(DropOut::class)
     override fun saveHandfulOfGold() {
-        while (farmed.get() < amount) {
+        while (farmed.get() < plannedAmount) {
             val coin = farm.get()
             farmed.incrementAndGet()
             chest.put(coin)
@@ -55,7 +37,7 @@ class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, pr
     override fun farmed() = farmed.get()
 
     override fun toString(): String {
-        return "A-Deposit(amount=$amount, farmed=${farmed.get()})"
+        return "A-Deposit(amount=$plannedAmount, farmed=${farmed.get()})"
     }
 
 }
@@ -85,17 +67,6 @@ class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, plannedAmount: In
     companion object Companion : Deposit.Factory {
         override fun create(farm: Supplier<Int>, chest: Chest, left: Int): Deposit = MultithreadingDeposit(farm, chest, left)
     }
-}
-
-open class AsyncVault(
-        farm: Supplier<Int>,
-        chestFactory: Supplier<Chest>,
-        depositFactory: Deposit.Factory,
-        vararg initialChests: Chest
-) : EnhancedVault(farm, chestFactory, depositFactory, *initialChests) {
-
-    override val chests: MutableList<Chest>
-        get() = Collections.synchronizedList(super.chests)
 }
 
 internal fun distributeInEqualShares(amount: Int, procNum: Int): List<Int> {

@@ -29,12 +29,12 @@ class StructuredConcurrencyDeposit(farm: Supplier<Int>, private val chest: Chest
 }
 
 
-open class StructuredConcurrencyVault(
+class StructuredConcurrencyVault(
         private val farm: Supplier<Int>,
         private val chestFactory:Supplier<Chest>,
-        vararg initialChests: Chest
+        initialChests: List<Chest>
 ) {
-    internal open val chests = mutableListOf(*initialChests)
+    private val chests = initialChests.toMutableList()
 
     suspend fun saveHandfulOfGold(amount: Int) {
         var left = amount
@@ -46,27 +46,12 @@ open class StructuredConcurrencyVault(
                 }
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
-                saveDropOutInTheChest(e, newChest)
                 chests += newChest
+                newChest.deepSave(e)
             } finally {
                 left -= deposit.farmed()
             }
         }
-    }
-
-    internal open fun saveDropOutInTheChest(e: DropOut, chest: Chest) {
-        putDropOutCoins(e, chest)
-        e.suppressed.forEach {
-            when (it) {
-                is DropOut -> putDropOutCoins(it, chest)
-                else -> throw it
-            }
-        }
-
-    }
-
-    private fun putDropOutCoins(e: DropOut, chest: Chest) {
-        e.coins.forEach { coin -> chest.put(coin) }
     }
 
     fun count() = chests.sumBy { it.count() }

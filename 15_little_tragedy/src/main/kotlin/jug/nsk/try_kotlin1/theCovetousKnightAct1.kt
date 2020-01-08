@@ -3,9 +3,9 @@ package jug.nsk.try_kotlin1
 import java.lang.Integer.min
 import java.util.function.Supplier
 
-class DropOut(val coins: List<Int>) : Exception("coins drop-out")
-
 internal const val CHEST_SIZE: Int = 100
+
+class DropOut(val coin: Int) : Exception("coin drop-out")
 
 interface Chest {
     @Throws(DropOut::class)
@@ -14,36 +14,51 @@ interface Chest {
     fun count(): Int
 }
 
+internal fun Chest.save(e: DropOut) = put(e.coin)
+
 interface Vault {
     fun saveHandfulOfGold(amount: Int)
 
     fun count(): Int
 }
 
-class SimpleChest(content: IntArray): Chest {
+abstract class BaseChest(gold: IntArray): Chest {
     private val content: IntArray = IntArray(CHEST_SIZE)
-    private var counter: Int = content.size
 
     init {
-        require(content.size <= CHEST_SIZE)
-        System.arraycopy(content, 0, this.content, 0, content.size)
+        require(gold.size <= CHEST_SIZE)
+        System.arraycopy(gold, 0, content, 0, gold.size)
     }
 
     override fun put(coin: Int) = try {
-        content[counter++] = coin
+        content[nextTryCount()] = coin
     } catch (e: IndexOutOfBoundsException) {
-        throw DropOut(listOf(coin))
+        throw DropOut(coin)
     }
 
-    override fun count() = min(counter, CHEST_SIZE)
+    override fun count() = min(getTryCount(), CHEST_SIZE)
+
+    internal abstract fun getTryCount(): Int
+
+    internal abstract fun nextTryCount(): Int
+
+    override fun toString(): String = "${this::class.java.simpleName}(count=${getTryCount()})"
+}
+
+class SimpleChest(gold: IntArray): BaseChest(gold) {
+    private var counter = gold.size
+
+    override fun getTryCount() = counter
+
+    override fun nextTryCount() = counter++
 
     companion object Companion : Supplier<Chest> {
         override fun get() = SimpleChest(IntArray(0))
     }
 }
 
-class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supplier<Chest>, vararg initialChests: Chest): Vault {
-    private val chests = mutableListOf(*initialChests)
+class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supplier<Chest>, initialChests: List<Chest>): Vault {
+    private val chests = initialChests.toMutableList()
 
     override fun saveHandfulOfGold(amount: Int) {
         repeat(amount) {
@@ -52,8 +67,8 @@ class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supp
                 chests.last().put(coin)
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
-                e.coins.forEach { newChest.put(it) }
                 chests += newChest
+                newChest.save(e)
             }
         }
     }

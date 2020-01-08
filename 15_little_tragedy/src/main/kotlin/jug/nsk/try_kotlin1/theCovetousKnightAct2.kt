@@ -35,13 +35,13 @@ class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, p
     }
 }
 
-open class EnhancedVault(
+abstract class BaseVault(
         private val farm: Supplier<Int>,
-        private val chestFactory:Supplier<Chest>,
+        private val chestFactory: Supplier<Chest>,
         private val depositFactory: Deposit.Factory,
-        vararg initialChests: Chest
-): Vault {
-    internal open val chests = mutableListOf(*initialChests)
+        initialChests: List<Chest>
+) : Vault {
+    private val chests = initialChests.toMutableList()
 
     override fun saveHandfulOfGold(amount: Int) {
         var left = amount
@@ -51,28 +51,26 @@ open class EnhancedVault(
                 deposit.saveHandfulOfGold()
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
-                saveDropOutInTheChest(e, newChest)
                 chests += newChest
+                saveDropOut(newChest, e)
             } finally {
                 left -= deposit.farmed()
             }
         }
     }
 
-    internal open fun saveDropOutInTheChest(e: DropOut, chest: Chest) {
-        putDropOutCoins(e, chest)
-        e.suppressed.forEach {
-            when (it) {
-                is DropOut -> putDropOutCoins(it, chest)
-                else -> throw it
-            }
-        }
-
-    }
-
-    private fun putDropOutCoins(e: DropOut, chest: Chest) {
-        e.coins.forEach { coin -> chest.put(coin) }
-    }
+    internal abstract fun saveDropOut(chest: Chest, e: DropOut)
 
     override fun count() = chests.sumBy { it.count() }
+}
+
+
+class EnhancedVault(
+        farm: Supplier<Int>,
+        chestFactory: Supplier<Chest>,
+        depositFactory: Deposit.Factory,
+        initialChests: List<Chest>
+) : BaseVault(farm, chestFactory, depositFactory, initialChests) {
+
+    override fun saveDropOut(chest: Chest, e: DropOut) = chest.save(e)
 }

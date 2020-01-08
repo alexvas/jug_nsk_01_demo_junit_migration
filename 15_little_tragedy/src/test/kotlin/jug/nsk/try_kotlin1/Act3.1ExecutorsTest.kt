@@ -13,7 +13,7 @@ class Act3_1ExecutorsTest {
         val toAdd = 100500
         val farm = CoinFarm()
 
-        val vault: Vault = AsyncVault(farm, AsyncChest, ExecutorDeposit, *initialAsyncChests())
+        val vault: Vault = DeepVault(farm, AsyncChest, ExecutorDeposit, initialAsyncChests())
         val startCount = vault.count()
 
         vault.saveHandfulOfGold(toAdd)
