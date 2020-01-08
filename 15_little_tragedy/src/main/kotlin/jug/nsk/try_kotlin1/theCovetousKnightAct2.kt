@@ -14,7 +14,7 @@ interface Deposit {
 
 class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val amount: Int): Deposit {
     init {
-        require(amount > 0) { "Negative amount: $amount" }
+        require(amount > 0) { "amount must be positive: $amount" }
     }
 
     private var farmed = 0

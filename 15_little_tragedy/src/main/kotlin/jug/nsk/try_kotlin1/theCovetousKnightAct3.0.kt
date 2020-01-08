@@ -38,7 +38,7 @@ class AsyncChest(content: IntArray) : Chest {
 
 class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val amount: Int): Deposit {
     init {
-        require(amount > 0) { "Negative amount: $amount" }
+        require(amount > 0) { "amount must be positive: $amount" }
     }
 
     private val farmed = AtomicInteger(0)
@@ -64,7 +64,7 @@ class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, amount: Int) : De
     private val deposits: List<Deposit>
 
     init {
-        require(amount > 0) { "Negative amount: $amount" }
+        require(amount > 0) { "amount must be positive: $amount" }
         deposits = distributeInEqualShares(amount, PROC_NUM).map {
             AsyncDeposit(farm, chest, it)
         }

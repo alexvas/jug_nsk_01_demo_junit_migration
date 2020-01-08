@@ -12,7 +12,7 @@ class StructuredConcurrencyDeposit(farm: Supplier<Int>, private val chest: Chest
     private val deposits: List<Deposit>
 
     init {
-        require(amount > 0) { "Negative amount: $amount" }
+        require(amount > 0) { "amount must be positive: $amount" }
         deposits = distributeInEqualShares(amount, PROC_NUM).map {
             AsyncDeposit(farm, chest, it)
         }
