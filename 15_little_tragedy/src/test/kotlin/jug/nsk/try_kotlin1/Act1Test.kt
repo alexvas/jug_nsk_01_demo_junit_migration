@@ -8,10 +8,13 @@ import java.util.function.Supplier
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
+const val COIN_GENERATION_DELAY_IN_NANOS = 10
+
 class SimpleCoinFarm: Supplier<Int> {
     private var counter = 0
 
     override fun get(): Int {
+//        Thread.sleep(0, COIN_GENERATION_DELAY_IN_NANOS)
         counter++
         return Random.nextInt()
     }

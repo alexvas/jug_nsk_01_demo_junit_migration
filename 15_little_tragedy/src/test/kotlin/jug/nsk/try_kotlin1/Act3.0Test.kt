@@ -4,6 +4,7 @@ package jug.nsk.try_kotlin1
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Supplier
 import kotlin.random.Random
@@ -33,6 +34,8 @@ class CoinFarm: Supplier<Int> {
 class Act3Test {
     @Test
     fun `проверяем, что всё сошлось`() {
+        val pw = File("/tmp/Alber's_pocket.log").printWriter()
+        Thread.setDefaultUncaughtExceptionHandler { _, e -> e.printStackTrace(pw) }
 
         val toAdd = 100500
         val farm = CoinFarm()
