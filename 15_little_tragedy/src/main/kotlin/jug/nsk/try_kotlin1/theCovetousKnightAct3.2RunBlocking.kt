@@ -18,10 +18,10 @@ class RunBlockingDeposit(farm: Supplier<Int>, private val chest: Chest, private 
     }
 
     @Throws(DropOut::class)
-    override fun saveHandfulOfGold() {
+    override fun saveFistfulOfGold() {
         runBlocking {
             deposits.forEach {
-                launch(Dispatchers.Default) { it.saveHandfulOfGold() }
+                launch(Dispatchers.Default) { it.saveFistfulOfGold() }
             }
         }
     }

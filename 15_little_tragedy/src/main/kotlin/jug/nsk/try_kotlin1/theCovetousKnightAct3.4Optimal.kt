@@ -14,7 +14,7 @@ class OptimalVault(
 ) {
     private val chests = initialChests.toMutableList()
 
-    suspend fun saveHandfulOfGold(amount: Int) = try {
+    suspend fun saveFistfulOfGold(amount: Int) = try {
 
         withContext(Dispatchers.Default) {
             val lastChest = chests.last()

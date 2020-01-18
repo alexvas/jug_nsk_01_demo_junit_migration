@@ -17,7 +17,7 @@ interface Chest {
 internal fun Chest.save(e: DropOut) = put(e.coin)
 
 interface Vault {
-    fun saveHandfulOfGold(amount: Int)
+    fun saveFistfulOfGold(amount: Int)
 
     fun count(): Int
 }
@@ -60,7 +60,7 @@ class SimpleChest(gold: IntArray): BaseChest(gold) {
 class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supplier<Chest>, initialChests: List<Chest>): Vault {
     private val chests = initialChests.toMutableList()
 
-    override fun saveHandfulOfGold(amount: Int) {
+    override fun saveFistfulOfGold(amount: Int) {
         repeat(amount) {
             try {
                 val coin = farm.get()

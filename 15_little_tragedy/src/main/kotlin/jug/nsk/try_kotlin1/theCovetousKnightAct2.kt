@@ -3,7 +3,7 @@ package jug.nsk.try_kotlin1
 import java.util.function.Supplier
 
 interface Deposit {
-    fun saveHandfulOfGold()
+    fun saveFistfulOfGold()
 
     fun farmed(): Int
 
@@ -20,7 +20,7 @@ class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, p
     private var farmed = 0
 
     @Throws(DropOut::class)
-    override fun saveHandfulOfGold() {
+    override fun saveFistfulOfGold() {
         while (farmed < plannedAmount) {
             val coin = farm.get()
             ++farmed
@@ -43,12 +43,12 @@ abstract class BaseVault(
 ) : Vault {
     private val chests = initialChests.toMutableList()
 
-    override fun saveHandfulOfGold(amount: Int) {
+    override fun saveFistfulOfGold(amount: Int) {
         var left = amount
         while (left > 0) {
             val deposit = depositFactory.create(farm, chests.last(), left)
             try {
-                deposit.saveHandfulOfGold()
+                deposit.saveFistfulOfGold()
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()
                 chests += newChest

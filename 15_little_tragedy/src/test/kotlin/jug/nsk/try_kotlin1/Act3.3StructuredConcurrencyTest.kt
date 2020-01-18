@@ -20,7 +20,7 @@ class Act3_3StructuredConcurrencyTest {
 
         runBlocking {
             val elapsed = measureTimeMillis {
-                vault.saveHandfulOfGold(toAdd)
+                vault.saveFistfulOfGold(toAdd)
             }
             println("saved $toAdd coins in $elapsed milliseconds")
         }

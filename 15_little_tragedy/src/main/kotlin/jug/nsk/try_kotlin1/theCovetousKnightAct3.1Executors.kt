@@ -19,9 +19,9 @@ class ExecutorDeposit(farm: Supplier<Int>, private val chest: Chest, private val
     }
 
     @Throws(DropOut::class)
-    override fun saveHandfulOfGold() {
+    override fun saveFistfulOfGold() {
         val futures = deposits.map {
-            pool.submit { it.saveHandfulOfGold() }
+            pool.submit { it.saveFistfulOfGold() }
         }
 
         val thrown = mutableListOf<DropOut>()

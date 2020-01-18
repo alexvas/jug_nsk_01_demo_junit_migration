@@ -19,9 +19,9 @@ class StructuredConcurrencyDeposit(farm: Supplier<Int>, private val chest: Chest
     }
 
     @Throws(DropOut::class)
-    fun saveHandfulOfGold(cs: CoroutineScope) {
+    fun saveFistfulOfGold(cs: CoroutineScope) {
         deposits.forEach {
-            cs.launch { it.saveHandfulOfGold() }
+            cs.launch { it.saveFistfulOfGold() }
         }
     }
 
@@ -36,13 +36,13 @@ class StructuredConcurrencyVault(
 ) {
     private val chests = initialChests.toMutableList()
 
-    suspend fun saveHandfulOfGold(amount: Int) {
+    suspend fun saveFistfulOfGold(amount: Int) {
         var left = amount
         while (left > 0) {
             val deposit = StructuredConcurrencyDeposit(farm, chests.last(), left)
             try {
                 withContext(Dispatchers.Default) {
-                    deposit.saveHandfulOfGold(this)
+                    deposit.saveFistfulOfGold(this)
                 }
             } catch (e: DropOut) {
                 val newChest = chestFactory.get()

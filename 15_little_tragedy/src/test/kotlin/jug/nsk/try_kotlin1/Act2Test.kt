@@ -17,7 +17,7 @@ class Act2Test {
         val startCount = vault.count()
 
         val elapsed = measureTimeMillis {
-            vault.saveHandfulOfGold(toAdd)
+            vault.saveFistfulOfGold(toAdd)
         }
         println("saved $toAdd coins in $elapsed milliseconds")
 

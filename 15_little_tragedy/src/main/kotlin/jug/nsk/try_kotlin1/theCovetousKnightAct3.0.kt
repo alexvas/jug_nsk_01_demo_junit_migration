@@ -26,7 +26,7 @@ class AsyncDeposit(private val farm: Supplier<Int>, private val chest: Chest, pr
     private val farmed = AtomicInteger(0)
 
     @Throws(DropOut::class)
-    override fun saveHandfulOfGold() {
+    override fun saveFistfulOfGold() {
         while (farmed.get() < plannedAmount) {
             val coin = farm.get()
             farmed.incrementAndGet()
@@ -53,9 +53,9 @@ class MultithreadingDeposit(farm: Supplier<Int>, chest: Chest, plannedAmount: In
         }
     }
 
-    override fun saveHandfulOfGold() {
+    override fun saveFistfulOfGold() {
         val threads = deposits.map {
-            Thread { it.saveHandfulOfGold() }
+            Thread { it.saveFistfulOfGold() }
         }
 
         threads.forEach { it.start() }
