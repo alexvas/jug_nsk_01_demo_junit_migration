@@ -11,8 +11,8 @@ dependencies {
     testFixturesApi(project(":10_shambala"))
     testFixturesApi(kotlin("stdlib-jdk8"))
 
-    val junitBomVersion = "5.5.2"
-    testFixturesApi(enforcedPlatform("org.junit:junit-bom:$junitBomVersion")) {
+    val junitBomVersion = "5.7.0"
+    testFixturesApi(platform("org.junit:junit-bom:$junitBomVersion")) {
         because("enforce matching Platform, Jupiter, and Vintage versions")
     }
     testFixturesApi("org.junit.jupiter:junit-jupiter-api")

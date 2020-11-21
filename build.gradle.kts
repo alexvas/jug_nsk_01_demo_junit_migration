@@ -10,4 +10,8 @@ subprojects {
         jcenter()
     }
 
+    val junitVersion = "5.7.0"
+    dependencies {
+        "testImplementation"(platform("org.junit:junit-bom:$junitVersion"))
+    }
 }
