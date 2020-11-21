@@ -9,7 +9,6 @@ tasks.test {
 
 dependencies {
     testFixturesApi(project(":10_shambala"))
-    testFixturesApi(kotlin("stdlib-jdk8"))
 
     val junitBomVersion = "5.7.0"
     testFixturesApi(platform("org.junit:junit-bom:$junitBomVersion")) {
