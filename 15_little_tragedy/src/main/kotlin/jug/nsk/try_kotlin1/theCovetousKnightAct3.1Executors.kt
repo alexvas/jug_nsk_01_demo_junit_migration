@@ -50,13 +50,13 @@ class ExecutorDeposit(farm: Supplier<Int>, private val chest: Chest, private val
 }
 
 fun Chest.deepSave(e: DropOut) {
-        save(e)
-        e.suppressed.forEach {
-            when (it) {
-                is DropOut -> save(it)
-                else -> throw it
-            }
+    save(e)
+    e.suppressed.forEach {
+        when (it) {
+            is DropOut -> save(it)
+            else -> throw it
         }
+    }
 }
 
 class DeepVault(

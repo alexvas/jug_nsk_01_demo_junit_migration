@@ -1,6 +1,7 @@
 package jug.nsk.try_kotlin1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -8,10 +9,14 @@ class PositivistTest5 {
 
   @Test
   void zeroInput() {
+    // given
     Positivist positivist = new Positivist();
+    // when
+    Executable lambda = () -> positivist.gimmePositive(0);
+    // then
     assertThrows(
         IllegalArgumentException.class,
-        () -> positivist.gimmePositive(0),
+        lambda,
         "zero input would cause an exception thrown"
     );
   }

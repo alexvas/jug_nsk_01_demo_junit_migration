@@ -11,13 +11,23 @@ public class ShambalaTest {
   @Test
   public void testShambalaIsReal() {
     System.out.println("running testShambalaIsReal");
-    assertTrue("Shambala is a real one", Shambala.getInstance().isAuthentic());
+    // given
+    Shambala shambala = Shambala.getInstance();
+    // when
+    boolean result = shambala.isAuthentic();
+    // then
+    assertTrue("Shambala is a real one", result);
   }
 
   @Test
   public void testShambalaIsStillReal() {
     System.out.println("running testShambalaIsStillReal");
-    assertTrue("Shambala is still a real one", Shambala.getInstance().isAuthentic());
+    // given
+    Shambala shambala = Shambala.getInstance();
+    // when
+    boolean result = shambala.isAuthentic();
+    // then
+    assertTrue("Shambala is still a real one", result);
   }
 
 }

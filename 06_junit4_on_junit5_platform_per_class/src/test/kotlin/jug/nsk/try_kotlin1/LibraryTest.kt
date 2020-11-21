@@ -9,8 +9,12 @@ class LibraryTest {
 
     @Test
     fun testSomeLibraryMethod() {
+        // given
         val classUnderTest = Library()
-        assertTrue("just 'true'", classUnderTest.someLibraryMethod())
+        // when
+        val result = classUnderTest.someLibraryMethod()
+        // then
+        assertTrue("just 'true'", result)
     }
 
     @BeforeClass

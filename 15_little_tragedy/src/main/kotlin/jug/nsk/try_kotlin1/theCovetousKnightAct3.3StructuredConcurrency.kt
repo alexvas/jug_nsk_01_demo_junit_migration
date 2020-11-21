@@ -31,7 +31,7 @@ class StructuredConcurrencyDeposit(farm: Supplier<Int>, private val chest: Chest
 
 class StructuredConcurrencyVault(
         private val farm: Supplier<Int>,
-        private val chestFactory:Supplier<Chest>,
+        private val chestFactory: Supplier<Chest>,
         initialChests: List<Chest>
 ) {
     private val chests = initialChests.toMutableList()

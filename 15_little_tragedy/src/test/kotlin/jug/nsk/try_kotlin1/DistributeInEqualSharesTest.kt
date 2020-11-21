@@ -8,7 +8,13 @@ class DistributeInEqualSharesTest {
 
     @Test
     fun `num = n_proc x k - 1`() {
-        val result = distributeInEqualShares(4 * 3 - 1, 4)
+        // given
+        val amount = 4 * 3 - 1
+        val procNum = 4
+
+        // when
+        val result = distributeInEqualShares(amount, procNum)
+        // then
         assertEquals(
                 listOf(3, 3, 3, 3 - 1),
                 result
@@ -17,7 +23,13 @@ class DistributeInEqualSharesTest {
 
     @Test
     fun `num = 1`() {
-        val result = distributeInEqualShares(1, 4)
+        // given
+        val amount = 1
+        val procNum = 4
+
+        // when
+        val result = distributeInEqualShares(amount, procNum)
+        // then
         assertEquals(
                 listOf(1),
                 result

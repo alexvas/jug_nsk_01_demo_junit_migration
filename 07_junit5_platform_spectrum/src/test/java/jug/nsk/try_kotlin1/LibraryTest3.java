@@ -12,8 +12,12 @@ public class LibraryTest3 extends TestCase {
     }
 
     public void testSomeLibraryMethod() {
+        // given
         Library classUnderTest = new Library();
-        assertTrue("just 'true'", classUnderTest.someLibraryMethod());
+        // when
+        boolean result = classUnderTest.someLibraryMethod();
+        // then
+        assertTrue("just 'true'", result);
         assertEquals("a initialized to 2 in setUp", 2, a);
     }
 

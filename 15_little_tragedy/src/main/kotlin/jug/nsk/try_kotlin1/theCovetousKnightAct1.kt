@@ -22,7 +22,7 @@ interface Vault {
     fun count(): Int
 }
 
-abstract class BaseChest(gold: IntArray): Chest {
+abstract class BaseChest(gold: IntArray) : Chest {
     private val content: IntArray = IntArray(CHEST_SIZE)
 
     init {
@@ -45,7 +45,7 @@ abstract class BaseChest(gold: IntArray): Chest {
     override fun toString(): String = "${this::class.java.simpleName}(count=${getTryCount()})"
 }
 
-class SimpleChest(gold: IntArray): BaseChest(gold) {
+class SimpleChest(gold: IntArray) : BaseChest(gold) {
     private var counter = gold.size
 
     override fun getTryCount() = counter
@@ -57,7 +57,7 @@ class SimpleChest(gold: IntArray): BaseChest(gold) {
     }
 }
 
-class SimpleVault(private val farm: Supplier<Int>, private val chestFactory:Supplier<Chest>, initialChests: List<Chest>): Vault {
+class SimpleVault(private val farm: Supplier<Int>, private val chestFactory: Supplier<Chest>, initialChests: List<Chest>) : Vault {
     private val chests = initialChests.toMutableList()
 
     override fun saveFistfulOfGold(amount: Int) {

@@ -13,8 +13,12 @@ public class LibraryTest {
     }
 
     @Test public void testSomeLibraryMethod() {
+        // given
         Library classUnderTest = new Library();
-        assertTrue("just 'true'", classUnderTest.someLibraryMethod());
+        // when
+        boolean result = classUnderTest.someLibraryMethod();
+        // then
+        assertTrue("just 'true'", result);
     }
 
     @AfterClass

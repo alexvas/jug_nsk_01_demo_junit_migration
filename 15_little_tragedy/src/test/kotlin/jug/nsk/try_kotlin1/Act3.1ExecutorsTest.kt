@@ -10,7 +10,7 @@ import kotlin.system.measureTimeMillis
 class Act3_1ExecutorsTest {
     @Test
     fun `проверяем, что всё сошлось`() {
-
+        // given
         val toAdd = 100500
         val farm = CoinFarm()
 
@@ -18,10 +18,12 @@ class Act3_1ExecutorsTest {
         val startCount = vault.count()
 
         val elapsed = measureTimeMillis {
+            // when
             vault.saveFistfulOfGold(toAdd)
         }
         println("saved $toAdd coins in $elapsed milliseconds")
 
+        // then
         assertEquals(toAdd, farm.count(), "как заказывали, так и сгенерировали")
         assertEquals(startCount + toAdd, vault.count(), "Ключи, ключи мои!...")
     }

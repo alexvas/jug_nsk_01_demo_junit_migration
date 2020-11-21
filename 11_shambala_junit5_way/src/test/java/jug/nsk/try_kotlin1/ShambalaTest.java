@@ -9,15 +9,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ShambalaTest {
 
   @Test
-  void testShambalaIsReal(Shambala shambala) {
+  void testShambalaIsReal(
+      Shambala shambala // given
+  ) {
     System.out.println("running testShambalaIsReal");
-    assertTrue(shambala.isAuthentic(), "Shambala is a real one");
+    // when
+    boolean result = shambala.isAuthentic();
+    // then
+    assertTrue(result, "Shambala is a real one");
   }
 
   @Test
-  void testShambalaIsStillReal(Shambala shambala) {
+  void testShambalaIsStillReal(
+      Shambala shambala // given
+  ) {
     System.out.println("running testShambalaIsStillReal");
-    assertTrue(shambala.isAuthentic(), "Shambala is still a real one");
+    // when
+    boolean result = shambala.isAuthentic();
+    // then
+    assertTrue(result, "Shambala is still a real one");
   }
 
 }

@@ -12,7 +12,7 @@ interface Deposit {
     }
 }
 
-class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val plannedAmount: Int): Deposit {
+class SimpleDeposit(private val farm: Supplier<Int>, private val chest: Chest, private val plannedAmount: Int) : Deposit {
     init {
         require(plannedAmount > 0) { "amount must be positive: $plannedAmount" }
     }

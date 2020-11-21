@@ -15,13 +15,16 @@ class ClientTestInJava {
 
   @Test
   void Алекс_вызывает_Юстаса1() {
+    // given
     Client client = new Client();
-
-    Continuation<String> cont = mockContinuation();
+    // when
     Object result = client.call(cont);
+    // then
     assertTrue(result instanceof Enum);
 //    assertEquals(result, CoroutineSingletons.COROUTINE_SUSPENDED);
   }
+
+  private final Continuation<String> cont = mockContinuation();
 
   @NotNull
   private Continuation<String> mockContinuation() {
@@ -40,12 +43,14 @@ class ClientTestInJava {
 
   @Test
   void Алекс_вызывает_Юстаса2() throws InterruptedException {
+    // given
     Client client = new Client();
-
+    // when
     String result = runBlocking(
         EmptyCoroutineContext.INSTANCE,
         (coroutineScope, continuation) -> client.call(continuation)
     );
+    // then
     assertEquals(result, "done");
   }
 
