@@ -1,35 +1,39 @@
 package jug.nsk.try_kotlin1;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class LibraryTest4 {
+public class LibraryTest4StaticState {
     private static int a = 1;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         System.out.println("setUp");
-        a = 2;
+        a = a + 1;
     }
 
-    @Test public void testSomeLibraryMethod() {
+    @Test
+    public void testSomeLibraryMethod1() {
         // given
         Library classUnderTest = new Library();
         // when
         boolean result = classUnderTest.someLibraryMethod();
         // then
         assertTrue("just 'true'", result);
-        assertEquals("a initialized to 2 in setUp", 2, a);
+        System.out.println("a = " + a);
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @Test
+    public void testSomeLibraryMethod2() {
+        System.out.println("a = " + a);
+    }
+
+    @After
+    public void tearDown() {
         System.out.println("tearDown");
-        a = 3;
     }
 
 }

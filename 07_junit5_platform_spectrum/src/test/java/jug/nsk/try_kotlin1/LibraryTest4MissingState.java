@@ -1,27 +1,22 @@
 package jug.nsk.try_kotlin1;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@TestInstance(Lifecycle.PER_CLASS)
-class LibraryTest5 {
-
+public class LibraryTest4MissingState {
     private int a = 1;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         System.out.println("setUp");
         a = a + 1;
     }
 
     @Test
-    void testSomeLibraryMethod() {
+    public void testSomeLibraryMethod1() {
         // given
         Library classUnderTest = new Library();
         // when
@@ -32,14 +27,13 @@ class LibraryTest5 {
     }
 
     @Test
-    void testSomeLibraryMethod2() {
+    public void testSomeLibraryMethod2() {
         System.out.println("a = " + a);
     }
 
-    @AfterAll
-    void tearDown() {
+    @After
+    public void tearDown() {
         System.out.println("tearDown");
-        assertEquals("a was incremented twice", 3, a);
     }
 
 }
