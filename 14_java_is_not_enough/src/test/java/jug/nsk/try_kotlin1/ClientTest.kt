@@ -10,10 +10,13 @@ class ClientTest {
 
     @Test
     fun `Алекс вызывает Юстаса!`() {
+        // given
         val client = Client()
         val result = runBlocking {
+            // when
             client.call()
         }
+        // then
         assertEquals(result, "done")
     }
 
