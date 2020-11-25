@@ -16,7 +16,7 @@ class LibraryTest5 {
 
     @BeforeEach
     void setUp() {
-        System.out.println("setUp");
+        System.out.println("setUp, a = " + a);
         a = a + 1;
     }
 
@@ -28,17 +28,17 @@ class LibraryTest5 {
         boolean result = classUnderTest.someLibraryMethod();
         // then
         assertTrue("just 'true'", result);
-        System.out.println("a = " + a);
+        System.out.println("method1: a = " + a);
     }
 
     @Test
     void testSomeLibraryMethod2() {
-        System.out.println("a = " + a);
+        System.out.println("method2: a = " + a);
     }
 
     @AfterAll
     void tearDown() {
-        System.out.println("tearDown");
+        System.out.println("tearDown, a = " + a);
         assertEquals("a was incremented twice", 3, a);
     }
 

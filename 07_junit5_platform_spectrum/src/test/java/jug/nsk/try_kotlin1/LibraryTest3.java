@@ -7,8 +7,8 @@ public class LibraryTest3 extends TestCase {
 
     @Override
     public void setUp() {
-        System.out.println("setUp");
-        a = 2;
+        System.out.println("setUp, a = " + a);
+        a = a + 1;
     }
 
     public void testSomeLibraryMethod() {
@@ -18,13 +18,16 @@ public class LibraryTest3 extends TestCase {
         boolean result = classUnderTest.someLibraryMethod();
         // then
         assertTrue("just 'true'", result);
-        assertEquals("a initialized to 2 in setUp", 2, a);
+        System.out.println("method1: a = " + a);
+    }
+
+    public void testSomeLibraryMethod2() {
+        System.out.println("method2: a = " + a);
     }
 
     @Override
     public void tearDown() {
-        System.out.println("tearDown");
-        a = 3;
+        System.out.println("tearDown, a = " + a);
     }
 
 }

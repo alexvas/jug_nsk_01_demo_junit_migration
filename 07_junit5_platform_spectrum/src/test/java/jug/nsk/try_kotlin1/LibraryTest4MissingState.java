@@ -11,7 +11,7 @@ public class LibraryTest4MissingState {
 
     @Before
     public void setUp() {
-        System.out.println("setUp");
+        System.out.println("setUp, a = " + a);
         a = a + 1;
     }
 
@@ -23,17 +23,17 @@ public class LibraryTest4MissingState {
         boolean result = classUnderTest.someLibraryMethod();
         // then
         assertTrue("just 'true'", result);
-        System.out.println("a = " + a);
+        System.out.println("method1: a = " + a);
     }
 
     @Test
     public void testSomeLibraryMethod2() {
-        System.out.println("a = " + a);
+        System.out.println("method2: a = " + a);
     }
 
     @After
     public void tearDown() {
-        System.out.println("tearDown");
+        System.out.println("tearDown, a = " + a);
     }
 
 }
