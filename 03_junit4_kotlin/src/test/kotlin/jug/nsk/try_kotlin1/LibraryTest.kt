@@ -6,7 +6,6 @@ import org.junit.BeforeClass
 import org.junit.Test
 
 class LibraryTest {
-
     @Test
     fun testSomeLibraryMethod() {
         // given
@@ -18,7 +17,6 @@ class LibraryTest {
     }
 
     companion object {
-
         @BeforeClass
         fun setUp() {
             println("setUp")
@@ -29,5 +27,4 @@ class LibraryTest {
             println("tearDown")
         }
     }
-
 }
