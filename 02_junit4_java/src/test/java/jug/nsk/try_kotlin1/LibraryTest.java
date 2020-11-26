@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+// java, JUnit4
 public class LibraryTest {
 
     @BeforeClass

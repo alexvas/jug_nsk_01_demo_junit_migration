@@ -1,5 +1,6 @@
 package jug.nsk.try_kotlin1;
 
+// Java
 public class Shambala {
 
   private Shambala() {

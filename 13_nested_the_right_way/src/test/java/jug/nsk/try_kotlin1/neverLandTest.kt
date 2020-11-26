@@ -1,4 +1,4 @@
-@file:Suppress("NonAsciiCharacters", "ClassName")
+@file:Suppress("NonAsciiCharacters", "ClassName", "DANGEROUS_CHARACTERS")
 
 package jug.nsk.try_kotlin1
 
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
+// Kotlin, JUnit5
 @ExtendWith(ShambalaExtension::class)
 class `где-то тамии` {
 

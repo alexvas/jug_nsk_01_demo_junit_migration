@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static kotlinx.coroutines.BuildersKt.runBlocking;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Java, JUnit5
 @SuppressWarnings("NonAsciiCharacters")
 class ClientTestInJava {
 
@@ -20,8 +20,9 @@ class ClientTestInJava {
     // when
     Object result = client.call(cont);
     // then
-    assertTrue(result instanceof Enum);
-//    assertEquals(result, CoroutineSingletons.COROUTINE_SUSPENDED);
+    assertEquals("done", result);
+//    assertTrue(result instanceof Enum);
+//    assertEquals(CoroutineSingletons.COROUTINE_SUSPENDED, result);
   }
 
   private final Continuation<String> cont = mockContinuation();

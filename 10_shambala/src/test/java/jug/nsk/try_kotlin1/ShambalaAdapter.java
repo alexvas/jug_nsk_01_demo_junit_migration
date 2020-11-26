@@ -1,5 +1,6 @@
 package jug.nsk.try_kotlin1;
 
+// Java
 class ShambalaAdapter implements AutoCloseable {
   private final Shambala shambala;
 

@@ -6,6 +6,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+// Kotlin, JUnit5
 class ClientTest {
 
     @Test

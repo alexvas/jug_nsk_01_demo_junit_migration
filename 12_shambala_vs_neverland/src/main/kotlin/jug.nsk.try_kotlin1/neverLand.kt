@@ -1,5 +1,6 @@
 @file:Suppress("NonAsciiCharacters", "ObjectPropertyName", "unused")
 
+// Kotlin
 package jug.nsk.try_kotlin1
 
 val Shambala.isAvalon: Boolean

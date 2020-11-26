@@ -9,6 +9,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+// Java, JUnit5
 @TestInstance(Lifecycle.PER_CLASS)
 class LibraryTest5 {
 

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
+// Java, JUnit4
 public class LibraryTest4MissingState {
     private int a = 1;
 

@@ -2,6 +2,7 @@ package jug.nsk.try_kotlin1;
 
 import org.junit.Test;
 
+// Java, JUnit4
 public class PositivistTest4 {
 
   // then!

@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+// Java, JUnit4
 public class LibraryTest4 {
     private static int a = 1;
 

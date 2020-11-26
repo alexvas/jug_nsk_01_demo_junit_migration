@@ -5,6 +5,7 @@ import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+// Java, JUnit5
 class PositivistTest5 {
 
   @Test

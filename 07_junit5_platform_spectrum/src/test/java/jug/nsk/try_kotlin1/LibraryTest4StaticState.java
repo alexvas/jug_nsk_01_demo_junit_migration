@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
+// Java, JUnit4
 public class LibraryTest4StaticState {
     private static int a = 1;
 

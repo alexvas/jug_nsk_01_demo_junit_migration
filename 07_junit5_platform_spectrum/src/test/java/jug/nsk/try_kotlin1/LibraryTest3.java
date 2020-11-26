@@ -2,6 +2,7 @@ package jug.nsk.try_kotlin1;
 
 import junit.framework.TestCase;
 
+// Java, JUnit3
 public class LibraryTest3 extends TestCase {
     private int a = 1;
 

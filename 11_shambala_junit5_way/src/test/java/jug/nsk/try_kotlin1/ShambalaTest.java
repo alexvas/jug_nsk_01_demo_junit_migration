@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Java, JUnit5
 @ExtendWith(ShambalaExtension.class)
 class ShambalaTest {
 

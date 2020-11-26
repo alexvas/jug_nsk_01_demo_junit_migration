@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertTrue;
 
+// Java, JUnit4
 @RunWith(ShambalaRunner.class)
 public class ShambalaTest {
 
