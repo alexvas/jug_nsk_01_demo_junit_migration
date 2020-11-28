@@ -14,4 +14,10 @@ subprojects {
     dependencies {
         "testImplementation"(platform("org.junit:junit-bom:$junitVersion"))
     }
+
+    plugins.withId("java-test-fixtures") {
+        dependencies {
+            "testFixturesApi"(platform("org.junit:junit-bom:$junitVersion"))
+        }
+    }
 }
